@@ -1,0 +1,7 @@
+<p>
+    <a href="{% url 'learning_logs:index' %}">Learning Logs</a>
+    <!-- index与learning_logs/urls.py中的index匹配，也就是首页地址 -->
+    <a href="{% url 'learning_logs:topics' %}">Topics</a>
+</p>
+
+{% block content %}{% endblock content %}

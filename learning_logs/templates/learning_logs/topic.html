@@ -1,0 +1,21 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+  <p>Topic: {{ topic.text }}</p>
+  
+  <p>Entries:</p>
+  <ul>
+    {% for entry in entries %}
+    <!-- views.py里传来的字典context -->
+      <li>
+        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+        <!-- '|'表示模板过滤器，对模板变量的值进行修改 -->
+        <p>{{ entry.text|linebreaks }}</p>
+        <!-- models.py里的类 -->
+      </li>
+    {% empty %}
+      <li>There are no entries for this topic yet.</li>
+    {% endfor %}
+  </ul>
+
+{% endblock content %}
