@@ -1,21 +1,91 @@
-<p>
-    <a href="{% url 'learning_logs:index' %}">B23计科1学习论坛-首页</a> - 
-    <!-- index与learning_logs/urls.py中的index匹配，也就是首页地址 -->
-    <a href="{% url 'learning_logs:topics' %}">话题集锦</a> - 
-      {% if user.is_authenticated %}
-        你好，{{ user.username }}
-      {% else %}
-        <a href="{% url 'accounts:register' %}">注册</a> - 
-        <a href="{% url 'accounts:login' %}">登陆</a>
-      {% endif %}
-</p>
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>B23计科1学习论坛-首页</title>
+    
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    
+  </head>
+  
+  <body>
 
-{% block content %}{% endblock content %}
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+      <!-- navbar是选择器，navbar-light和bg-light表示浅色主题，mb:margin bottom -->
+      <div class="container-fluid">
+        <!-- div: division分区 -->
+        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+          <!-- brand使这个链接更显眼 -->
+          B23计科1学习论坛
+        </a>
+            
+        <button class="navbar-toggler" type="button" 
+          data-bs-toggle="collapse" data-bs-target="#navbarCollapse" 
+          aria-controls="navbarCollapse" aria-expanded="false" 
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- 浏览器窗口太小，就把导航栏折叠起来 -->
+            
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <!-- me: margin end -->
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'learning_logs:topics' %}">
+                  话题集锦
+                </a>
+              </li>
+          </ul> <!-- 定义导航栏左侧连接的代码 -->
+          
+          <!-- 与账户相关的链接 -->
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <span class="navbar-text me-2">
+                  你好，{{ user.username }}
+                </span>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:register' %}">
+                  注册
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:login' %}">
+                  登录
+                </a>
+              </li>
+            {% endif %}
+          </ul> <!-- 与账户相关的链接代码结束 -->
+          
+          {% if user.is_authenticated %}
+            <form action="{% url 'accounts:logout' %}" method="post">
+              {% csrf_token %}
+              <button name="submit" class="btn btn-outline-secondary btn-sm">
+                退出登录
+              </button>
+            </form>
+          {% endif %}
+          
+        </div> <!-- 定义导航栏可折叠的代码 -->
 
-{% if user.is_authenticated %}
-  <hr />
-  <form action="{% url 'accounts:logout' %}" method="post">
-    {% csrf_token %}
-    <button>退出登陆</button>
-  </form>
-{% endif %}
+      </div> <!-- 定义导航栏容器的代码 -->
+    </nav> <!-- 定义导航栏的代码 -->
+    
+    <main class="container">
+      <div class="pb-2 mb-2 border-bottom">
+        <!-- padding内边距，元素内容和边框的距离；margin外边距，元素边框与其他元素的距离 -->
+        {% block page_header %}{% endblock page_header %}
+      </div>
+      <div>
+        {% block content %}{% endblock content %}
+      </div>
+    </main>
+  
+
+  </body>
+</html>

@@ -32,7 +32,7 @@ def topic(request, topic_id):
     # if topic.owner != request.user:
         # raise Http404
     entries = topic.entry_set.order_by('date_added') # 先展示新entry
-    context = {'topic': topic, 'entries': entries}
+    context = {'topic': topic, 'entries': entries, 'owner': topic.owner}
     return render(request, 'learning_logs/topic.html', context)
 
 @login_required

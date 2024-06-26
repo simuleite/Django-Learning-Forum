@@ -1,8 +1,22 @@
 {% extends "learning_logs/base.html" %}
 <!-- extends让html知道它要继承什么模板，路径从templates开始 -->
 
-{% block content %}
-<!-- 'content'是块名 -->
-  <p>欢迎来到B23计算机科学与技术1班专属学习论坛。在这里，记录你的学习、生活；
-    在这里，分享你的忧愁、惊喜！</p>
-{% endblock content %}
+{% block page_header %}
+<!-- 'page_header'是块名 -->
+  <div class="p-3 mb-4 bg-light border rounded-3">
+    <div class="container-fluid py-4">
+      <!-- py上下内边距 -->
+      <h1 class="display-3">跟踪班级时事热点</h1>
+      <!-- display-3：更瘦更高的标题 -->
+      <p class="lead">
+      <!-- lead：更加显眼 -->
+        欢迎来到B23计算机科学与技术1班专属学习论坛。在这里，记录你的学习、生活；
+        在这里，分享你的忧愁、惊喜！
+      </p>
+      <a class="btn btn-primary btn-lg mt-1" href="{% url 'accounts:register' %}">
+        现在注册 &raquo;
+        <!-- &raquo表示 ‘>>’ -->
+      </a>
+    </div>
+  </div>
+{% endblock page_header %}

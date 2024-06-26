@@ -1,19 +1,23 @@
 {% extends 'learning_logs/base.html' %}
 
+{% block page_header %}
+  <h1>全部话题</h1>
+{% endblock page_header %}
+
 {% block content %}
 
-    <p>全部话题</p>
-    
-    <ul>
+    <ul class="list-group border-bottom pb-2 mb-4">
+        <!-- 使用Bootstrap列表组 -->
         {% for topic in topics %}
         <!-- for循环标签 -->
-        <li>
-          <a href="{% url 'learning_logs:topic' topic.id %}">
-            {{ topic.text }}</a>
-        </li>
+          <li class="list-group-item broder-0">
+            <a href="{% url 'learning_logs:topic' topic.id %}">
+              {{ topic.text }}
+            </a>
+          </li>
         {% empty %}
         <!-- 列表为空的情况 -->
-        <li>还没有创建话题哟~</li>
+          <li class="list-group-item broder-0">还没有创建话题哟~</li>
         {% endfor %}
         <!-- 结束for循环 -->
     </ul>

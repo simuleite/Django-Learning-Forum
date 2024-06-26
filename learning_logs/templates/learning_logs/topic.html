@@ -1,29 +1,41 @@
 {% extends 'learning_logs/base.html' %}
 
+{% block page_header %}
+  <h1>{{ topic.text }}</h1>
+{% endblock page_header %}
+
 {% block content %}
-  <p>当前话题：{{ topic.text }}</p>
-  
-  <p>帖子：</p>
+  <!-- <p>帖子：</p> -->
   <p>
     <a href="{% url 'learning_logs:new_entry' topic.id %}">
       发个新帖子吧！
     </a>
   </p>
+
   <ul>
     {% for entry in entries %}
     <!-- views.py里传来的字典context -->
-      <li>
-        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-        <!-- '|'表示模板过滤器，对模板变量的值进行修改 -->
-        <p>{{ entry.text|linebreaks }}</p>
-        <!-- models.py里的类 -->
-        <p>
-          <a href="{% url 'learning_logs:edit_entry' entry.id %}">编辑帖子</a>
-        </p>
-      </li>
+      <div class="card mb-3">
+        <!-- 包含时间戳和编辑链接的标题 -->
+        <h4 class="card-header">
+          {{ owner }} - 
+          {{ entry.date_added|date:'M d, Y H:i' }}         
+          <small>
+            <a href="{% url 'learning_logs:edit_entry' entry.id %}">
+              编辑帖子
+            </a>
+          </small>
+        </h4>
+        
+        <!-- 包含entry文本的正文 -->
+        <div class="card-body">
+          <!-- '|'表示模板过滤器，对模板变量的值进行修改 -->
+          {{ entry.text|linebreaks }}         
+          <!-- models.py里的类 -->
+        </div>
+      </div>
     {% empty %}
-      <li>还没有人聊这个话题喔</li>
+      <p>还没有人聊这个话题喔</p>
     {% endfor %}
-  </ul>
 
 {% endblock content %}
