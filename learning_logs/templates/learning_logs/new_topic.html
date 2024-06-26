@@ -1,0 +1,13 @@
+{% extends "learning_logs/base.html" %}
+
+{% block content %}
+  <p>增加新话题：</p>
+  
+  <form action="{% url 'learning_logs:new_topic' %}" method="post">
+    {% csrf_token %}
+    <!-- 网络安全，防止跨站请求伪造 -->
+    {{ form.as_div }}
+    <!-- Django表单模板变量 -->
+    <button name="submit">增加话题</button>
+  </form>
+{% endblock content %}

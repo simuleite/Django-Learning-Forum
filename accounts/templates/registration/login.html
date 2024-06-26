@@ -1,0 +1,15 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+  {% if form.errors %}
+    <p>用户名和密码不匹配，请重试。</p>
+  {% endif %}
+  
+  <form action="{% url 'accounts:login' %}" method="post">
+      <!-- 将实参action设置为登陆界面的URL -->
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button name="submit">登陆</button>
+  </form>
+
+{% endblock content %}

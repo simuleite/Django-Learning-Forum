@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <p>Topics</p>
+    <p>全部话题</p>
     
     <ul>
         {% for topic in topics %}
@@ -13,9 +13,11 @@
         </li>
         {% empty %}
         <!-- 列表为空的情况 -->
-        <li>No topics have been added yet.</li>
+        <li>还没有创建话题哟~</li>
         {% endfor %}
         <!-- 结束for循环 -->
     </ul>
+    
+    <a href="{% url 'learning_logs:new_topic' %}">来点新话题</a>
 
 {% endblock content %}

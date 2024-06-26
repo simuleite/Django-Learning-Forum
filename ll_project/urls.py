@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [ # 包含项目中App的URL
     path('admin/', admin.site.urls), # admin.site.urls定义了可以在admin请求的所有url
+    path('accounts/', include('accounts.urls')), # 包含accounts中的urls
     path('', include('learning_logs.urls')),
 ]

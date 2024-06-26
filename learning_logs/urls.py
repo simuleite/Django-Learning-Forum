@@ -12,6 +12,10 @@ urlpatterns = [ # 包含在App learning_logs中请求的网页
     # 特定topic的详细页面
     path('topics/<int:topic_id>/', views.topic, name='topic'),
     
-    # 用于用户添加新主题的网页
+    # 用于用户添加新话题的网页
     path('new_topic/', views.new_topic, name="new_topic"),
+    # 用于用户添加新帖子的页面
+    path('new_entry/<int:topic_id>/', views.new_entry, name='new_entry'),
+    # 用于用户编辑帖子的页面
+    path('edit_entry/<int:entry_id>/', views.edit_entry, name='edit_entry'),
 ]

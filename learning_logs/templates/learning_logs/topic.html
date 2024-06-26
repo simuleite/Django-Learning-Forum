@@ -1,9 +1,14 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block content %}
-  <p>Topic: {{ topic.text }}</p>
+  <p>当前话题：{{ topic.text }}</p>
   
-  <p>Entries:</p>
+  <p>帖子：</p>
+  <p>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">
+      发个新帖子吧！
+    </a>
+  </p>
   <ul>
     {% for entry in entries %}
     <!-- views.py里传来的字典context -->
@@ -12,9 +17,12 @@
         <!-- '|'表示模板过滤器，对模板变量的值进行修改 -->
         <p>{{ entry.text|linebreaks }}</p>
         <!-- models.py里的类 -->
+        <p>
+          <a href="{% url 'learning_logs:edit_entry' entry.id %}">编辑帖子</a>
+        </p>
       </li>
     {% empty %}
-      <li>There are no entries for this topic yet.</li>
+      <li>还没有人聊这个话题喔</li>
     {% endfor %}
   </ul>
 
