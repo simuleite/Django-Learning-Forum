@@ -3,15 +3,24 @@
 
 {% block content %}
   <h1>
-    <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+    <ul class="list-group border-bottom">
+      <a class="list-group-item list-group-item-action d-flex gap-3 py-3" 
+        href="{% url 'learning_logs:topic' topic.id %}">
+          返回 {{ topic }}
+      </a>
+    </ul>
   </h1>
-  <p>编辑帖子</p>
   
-  <form action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
-    {% csrf_token %}
-    <!-- {% bootstrap_form form %} -->
-    {{ form.as_div }}
-    <button name="submit">保存修改</button>
-  </form>
+  <div class="card">
+    <h4 class="card-body">编辑帖子</h4>
+  
+    <form class="card-body" action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <!-- {{ form.as_div }} -->
+      <button class="btn btn-primary" name="submit">保存修改</button>
+    </form>
+  </div>
+  
 
 {% endblock content %}

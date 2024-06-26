@@ -17,17 +17,22 @@
     <!-- views.py里传来的字典context -->
       <div class="card mb-3">
         <!-- 包含时间戳和编辑链接的标题 -->
-        <h4 class="card-header">
-          {{ entry.owner }} - 
-          {{ entry.date_added|date:'M d, Y H:i' }}         
-          {% if user == entry.owner %}
-          <small>
-            <a class="btn btn-outline-dark" href="{% url 'learning_logs:edit_entry' entry.id %}">
-              编辑帖子
-            </a>
-          </small>
+        <div class="card-header">
+          <h4>
+            {{ entry.owner }}
+            {% if user == entry.owner %}
+            <small>
+              <a class="btn btn-outline-dark" href="{% url 'learning_logs:edit_entry' entry.id %}">
+                编辑帖子
+              </a>
+            </small>
           {% endif %}
-        </h4>
+          </h4>
+          发表于 {{ entry.date_added|date:'M d, Y H:i' }}         
+          
+        </div>
+        
+        
         
         <!-- 包含entry文本的正文 -->
         <div class="card-body">

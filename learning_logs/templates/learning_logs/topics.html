@@ -1,7 +1,12 @@
 {% extends 'learning_logs/base.html' %}
 
 {% block page_header %}
-  <h1>全部话题</h1>
+  <h1>
+    全部话题
+    <a class="btn btn-primary" href="{% url 'learning_logs:new_topic' %}">
+      来点新话题
+    </a>
+  </h1>
 {% endblock page_header %}
 
 {% block content %}
@@ -22,6 +27,5 @@
         <!-- 结束for循环 -->
     </ul>
     
-    <a class="btn btn-primary" href="{% url 'learning_logs:new_topic' %}">来点新话题</a>
 
 {% endblock content %}

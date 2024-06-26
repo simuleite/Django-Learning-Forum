@@ -13,10 +13,16 @@
         欢迎来到B23计算机科学与技术1班专属学习论坛。在这里，记录你的学习、生活；
         在这里，分享你的忧愁、惊喜！
       </p>
-      <a class="btn btn-primary btn-lg mt-1" href="{% url 'accounts:register' %}">
-        现在注册 &raquo;
-        <!-- &raquo表示 ‘>>’ -->
+        {% if user.is_authenticated %}
+        <a class="btn btn-primary btn-lg mt-1" href="{% url 'learning_logs:topics' %}">
+          加入讨论 &raquo;
+        {% else %}
+        <a class="btn btn-primary btn-lg mt-1" href="{% url 'accounts:register' %}">
+          现在注册 &raquo;
+          <!-- &raquo表示 ‘>>’ -->
+        {% endif %}
       </a>
+      
     </div>
   </div>
 {% endblock page_header %}

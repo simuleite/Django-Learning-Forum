@@ -1,13 +1,15 @@
 {% extends "learning_logs/base.html" %}
+{% load django_bootstrap5 %}
 
 {% block content %}
-  <p>增加新话题：</p>
+  <h1>增加新话题</h1>
   
   <form action="{% url 'learning_logs:new_topic' %}" method="post">
     {% csrf_token %}
     <!-- 网络安全，防止跨站请求伪造 -->
-    {{ form.as_div }}
+    <!-- {{ form.as_div }} -->
+    {% bootstrap_form form %}
     <!-- Django表单模板变量 -->
-    <button name="submit">增加话题</button>
+    <button class="btn btn-primary mt-3" name="submit">增加话题</button>
   </form>
 {% endblock content %}

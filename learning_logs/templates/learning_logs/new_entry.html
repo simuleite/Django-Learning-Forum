@@ -1,14 +1,24 @@
 {% extends "learning_logs/base.html" %}
+{% load django_bootstrap5 %}
 
 {% block content %}
-  <p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
-  
-  <p>发帖：</p>
-  <form action="{% url 'learning_logs:new_entry' topic.id %}" method='post'>
-    {% csrf_token %}
-    {{ form.as_div }}
-    <!-- <textarea name="text" rows="3" cols="80"></textarea> -->
-    <button name="submit">确认发布</button>
-  </form>
+<h1>
+  <ul class="list-group border-bottom">
+    <a class="list-group-item list-group-item-action py-3 pe-3" 
+      href="{% url 'learning_logs:topic' topic.id %}" aria-current="true">
+      返回 {{ topic }}
+    </a>
+  </ul>
+</h1>
+  <div class="card"> 
+  <h4 class="card-header">发帖</h4>
+    <form class="card-body" action="{% url 'learning_logs:new_entry' topic.id %}" method='post'>
+      {% csrf_token %}
+      <!-- {{ form.as_div }} -->
+      {% bootstrap_form form %}
+      <!-- <textarea name="text" rows="3" cols="80"></textarea> -->
+      <button class="btn btn-primary" name="submit">确认发布</button>
+    </form>
+  </div>
 
 {% endblock content %}
