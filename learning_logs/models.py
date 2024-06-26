@@ -21,6 +21,9 @@ class Entry(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     # 注意DateTimeField和DateField的区别，前者包含时间，后者只有日期
     
+    # 为entry绑定owner
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     class Meta: # 用于管理额外信息
         verbose_name_plural = 'entries' # 表示多个条目，默认会是Entry，不符合英语语法
 

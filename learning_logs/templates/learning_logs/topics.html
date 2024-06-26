@@ -10,11 +10,11 @@
         <!-- 使用Bootstrap列表组 -->
         {% for topic in topics %}
         <!-- for循环标签 -->
-          <li class="list-group-item broder-0">
-            <a href="{% url 'learning_logs:topic' topic.id %}">
+          <!-- <li class="list-group-item broder-0"> -->
+            <a class="list-group-item list-group-item-action d-flex gap-3 py-3" href="{% url 'learning_logs:topic' topic.id %}">
               {{ topic.text }}
             </a>
-          </li>
+          <!-- </li> -->
         {% empty %}
         <!-- 列表为空的情况 -->
           <li class="list-group-item broder-0">还没有创建话题哟~</li>
@@ -22,6 +22,6 @@
         <!-- 结束for循环 -->
     </ul>
     
-    <a href="{% url 'learning_logs:new_topic' %}">来点新话题</a>
+    <a class="btn btn-primary" href="{% url 'learning_logs:new_topic' %}">来点新话题</a>
 
 {% endblock content %}

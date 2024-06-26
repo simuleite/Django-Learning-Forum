@@ -32,7 +32,7 @@ def topic(request, topic_id):
     # if topic.owner != request.user:
         # raise Http404
     entries = topic.entry_set.order_by('date_added') # 先展示新entry
-    context = {'topic': topic, 'entries': entries, 'owner': topic.owner}
+    context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
 @login_required
@@ -68,6 +68,7 @@ def new_entry(request, topic_id):
         form = EntryForm(data=request.POST)
         if form.is_valid():
             new_entry = form.save(commit=False) # 不保存到数据库
+            new_entry.owner = request.user
             new_entry.topic = topic
             new_entry.save() # 保存到数据库，确保与topic关联
             return redirect('learning_logs:topic', topic_id=topic_id)
@@ -82,8 +83,8 @@ def edit_entry(request, entry_id):
     # 获取entry与topic
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
-    # if topic.owner != request.user:
-        # raise Http404
+    if entry.owner != request.user:
+        raise Http404
     
     if request.method != 'POST':
         # 初次请求，使用当前entry填充表单

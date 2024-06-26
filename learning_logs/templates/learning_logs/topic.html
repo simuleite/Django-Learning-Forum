@@ -7,7 +7,7 @@
 {% block content %}
   <!-- <p>帖子：</p> -->
   <p>
-    <a href="{% url 'learning_logs:new_entry' topic.id %}">
+    <a class="btn btn-primary" href="{% url 'learning_logs:new_entry' topic.id %}">
       发个新帖子吧！
     </a>
   </p>
@@ -18,13 +18,15 @@
       <div class="card mb-3">
         <!-- 包含时间戳和编辑链接的标题 -->
         <h4 class="card-header">
-          {{ owner }} - 
+          {{ entry.owner }} - 
           {{ entry.date_added|date:'M d, Y H:i' }}         
+          {% if user == entry.owner %}
           <small>
-            <a href="{% url 'learning_logs:edit_entry' entry.id %}">
+            <a class="btn btn-outline-dark" href="{% url 'learning_logs:edit_entry' entry.id %}">
               编辑帖子
             </a>
           </small>
+          {% endif %}
         </h4>
         
         <!-- 包含entry文本的正文 -->
