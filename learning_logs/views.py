@@ -31,7 +31,7 @@ def topic(request, topic_id):
     # 确认请求的topic属于当前用户
     # if topic.owner != request.user:
         # raise Http404
-    entries = topic.entry_set.order_by('date_added') # 先展示新entry
+    entries = topic.entry_set.order_by('-date_added') # 先展示新entry
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
