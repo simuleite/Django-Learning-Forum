@@ -13,13 +13,19 @@
   
   <div class="card">
     <h4 class="card-body">编辑帖子</h4>
-  
-    <form class="card-body" action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      <!-- {{ form.as_div }} -->
-      <button class="btn btn-primary" name="submit">保存修改</button>
-    </form>
+      <form class="card-body" action="{% url 'learning_logs:edit_entry' entry.id %}" method='post'>
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <!-- {{ form.as_div }} -->
+        <button class="btn btn-primary" name="submit">保存修改</button>
+      </form>
+      <form  class="card-body"
+        action="{% url 'learning_logs:delete_entry' entry.id %}"
+        onsubmit="return confirm('确定要删除帖子吗？')">
+          {% csrf_token %}
+          <button class="btn btn-danger" type="submit">删除条目</button>
+      </form>
+    
   </div>
   
 

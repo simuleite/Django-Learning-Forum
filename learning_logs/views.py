@@ -98,3 +98,15 @@ def edit_entry(request, entry_id):
         
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)
+
+@login_required
+def delete_entry(request, entry_id):
+    """删除现有entry"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    
+    if entry.owner != request.user:
+        raise Http404
+    
+    entry.delete()
+    return redirect('learning_logs:topic', topic_id=topic.id)
