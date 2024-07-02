@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect # 用于渲染，重定向
 from django.contrib.auth.decorators import login_required # 用于限制访问
 from django.http import Http404 # 用于处理404错误
+from django.db.models import Max
 
 # Create your views here.
 from .models import Topic, Entry # 从当前文件夹的models.py中导入Topic类
@@ -15,10 +16,8 @@ def index(request): # urlpattern匹配到对应网址后，来这里调用函数
 def topics(request):
     """显示所有主题"""
     # 从数据库中获取所有主题
-    # 全部topic可见
-    topics = Topic.objects.order_by('date_added') 
-    # 只有topic创建者可见
-    # topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+    topics = Topic.objects.annotate(latest_entry_date=Max('entry__date_added')).order_by('-latest_entry_date')
+    # 使用Max聚合函数来找出每个Topic关联的Entry中最大的date_added值
     context = {'topics': topics} # 传递给模板的数据
     # 前一个对应models.py中的Topic类，后一个对应topics.html中的{{ topics }}
     return render(request, 'learning_logs/topics.html', context)
@@ -28,9 +27,6 @@ def topic(request, topic_id):
     """显示单个topic以及所有entry"""
     # 查询
     topic = Topic.objects.get(id=topic_id) # 获取指定id的topic
-    # 确认请求的topic属于当前用户
-    # if topic.owner != request.user:
-        # raise Http404
     entries = topic.entry_set.order_by('-date_added') # 先展示新entry
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -83,7 +79,7 @@ def edit_entry(request, entry_id):
     # 获取entry与topic
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
-    if entry.owner != request.user:
+    if entry.owner != request.user: # 拥有者才能编辑
         raise Http404
     
     if request.method != 'POST':
@@ -105,7 +101,7 @@ def delete_entry(request, entry_id):
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
     
-    if entry.owner != request.user:
+    if entry.owner != request.user: # 拥有者才能删除
         raise Http404
     
     entry.delete()

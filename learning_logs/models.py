@@ -28,5 +28,8 @@ class Entry(models.Model):
         verbose_name_plural = 'entries' # 表示多个条目，默认会是Entry，不符合英语语法
 
     def __str__(self):
-        """返回表示条目entry的简单字符串（只显示前50词）"""
-        return f"{self.text[:50]}..."
+        if len(self.text) > 50:
+            """返回表示条目entry的简单字符串（只显示前50词）"""
+            return f"{self.text[:50]}..."
+        else:
+            return self.text
